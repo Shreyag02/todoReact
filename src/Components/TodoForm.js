@@ -1,12 +1,12 @@
 import React , {useState, useContext} from 'react';
 import {FormGroup, Input, Button, Form, InputGroup, InputGroupAddon} from "reactstrap"
 import {v4} from 'uuid'
-import {TodoContext} from '../Context/TodoContext'
-import {ADD_TODO} from '../Context/action.types'
+// import {TodoContext} from '../Context/TodoContext'
+// import {ADD_TODO} from '../Context/action.types'
 
-const TodoForm = () => {
+const TodoForm = ({todos, setTodos}) => {
     const [todoString, setTodoString] = useState("")
-    const {dispatch} =useContext(TodoContext);
+    // const {dispatch} =useContext(TodoContext);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -17,10 +17,13 @@ const TodoForm = () => {
             todoString,
             id: v4()
         }
-        dispatch({
-            type: ADD_TODO,
-            payload: todo
-        })
+        setTodos(
+            [...todos,todo]
+        );
+        // dispatch({
+        //     type: ADD_TODO,
+        //     payload: todo
+        // })
         setTodoString("");
     }
     return (
@@ -35,7 +38,7 @@ const TodoForm = () => {
                 value={todoString}
                 onChange={e => setTodoString(e.target.value)}
                 />
-                <InputGroupAddon addonType="prepend">
+                <InputGroupAddon addonType="append">
                     <Button color="warning" >
                         Add
                     </Button>
